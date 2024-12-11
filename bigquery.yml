@@ -1,0 +1,19 @@
+---
+
+- name: Create a BigQuery Dataset
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks: 
+    - name: Create a Google BigQuery Dataset
+      google.cloud.gcp_bigquery_dataset:
+        name: my_example_dataset
+        dataset_reference:
+          dataset_id: my_example_dataset
+        project: "{{ _project_ }}"
+        auth_kind: "{{ _auth_kind_ }}"
+        service_account_file: "{{ _service_account_file_ }}"
+        state: present
+
+    - name: Create a table in the Dataset
+      
