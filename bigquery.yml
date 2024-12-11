@@ -105,7 +105,7 @@
 
     - name: Asignar role para consulta al dataset
       ansible.builtin.uri:
-        url: "https://cloudresourcemanager.googleapis.com/bigquery/v2/projects/{{ project_id }}/roles/bigquery.dataViewer"
+        url: "https://cloudresourcemanager.googleapis.com/v2/projects/{{ project_id }}/roles/bigquery.dataViewer"
         method: POST
         headers:
           Authorization: "Bearer {{ gcp_access_token }}"
