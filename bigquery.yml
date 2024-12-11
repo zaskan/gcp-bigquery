@@ -55,15 +55,15 @@
     #     project: "{{ project_id }}"
     #     auth_kind: serviceaccount
 
-    - name: Asignar rol de BigQuery a un usuario
-      google.cloud.gcp_iam_policy_binding:
-        resource: "projects/{{ project_id }}"
-        policy_bindings:
-          - role: roles/bigquery.dataViewer
-            members:
-              - user:fegarcia@redhat.com
-        auth_kind: serviceaccount
-        # service_account_file: /path/to/service-account.json
-        state: present
-      tags: 
-        - iam
+    # - name: Asignar rol de BigQuery a un usuario
+    #   google.cloud.gcp_iam_policy_binding:
+    #     resource: "projects/{{ project_id }}"
+    #     policy_bindings:
+    #       - role: roles/bigquery.dataViewer
+    #         members:
+    #           - user:fegarcia@redhat.com
+    #     auth_kind: serviceaccount
+    #     # service_account_file: /path/to/service-account.json
+    #     state: present
+    #   tags: 
+    #     - iam
