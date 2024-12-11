@@ -107,20 +107,19 @@
 
     - name: Asignar role para consulta al dataset
       ansible.builtin.uri:
-        url: "https://bigquery.googleapis.com/bigquery/v2/projects/{{ project_id }}:setIamPolicy"
+        url: "https://bigquery.googleapis.com/bigquery/v2/projects/{{ project_id }}/roles/bigquery.dataViewer"
         method: POST
         headers:
           Authorization: "Bearer {{ gcp_access_token }}"
           Content-Type: "application/json"
         body_format: json
-        body:
-          policy:
-            bindings: >
-              {{
-                [{'role': 'roles/bigquery.dataViewer', 'members': ['user:' + user_email]}]
-              }}
-          updateMask: "bindings"
+        body: |
+          {
+            "role": "roles/bigquery.dataViewer",
+            "members": [
+              "user:{{ user_email }}"
+            ]
+          }
       register: role_bind
       tags:
         - rolebind
-        
