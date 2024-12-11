@@ -4,16 +4,66 @@
   hosts: localhost
   connection: local
   gather_facts: false
+  vars: 
+    - project_id: "openenv-g5wxq"
   tasks: 
     - name: Create a Google BigQuery Dataset
+      register: create_dataset
       google.cloud.gcp_bigquery_dataset:
-        name: my_example_dataset
+        name: demo_dataset
         dataset_reference:
-          dataset_id: my_example_dataset
-        project: "{{ _project_ }}"
-        auth_kind: "{{ _auth_kind_ }}"
-        service_account_file: "{{ _service_account_file_ }}"
+          dataset_id: demo_dataset
+        project: "{{ project_id }}"
+        auth_kind: serviceaccount
+        # service_account_file: "{{ _service_account_file_ }}"
         state: present
+      tags: 
+        - dataset
 
-    - name: Create a table in the Dataset
-      
+    - name: Create a new table in BigQuery 
+      register: create_table
+      google.cloud.gcp_bigquery_table:
+        name: clientes
+        dataset: demo_dataset
+        table_reference:
+          dataset_id: demo_dataset
+          project_id: "{{ project_id }}"
+          table_id: clientes
+        project: "{{ project_id }}"
+        auth_kind: serviceaccount
+        # service_account_file: "{{ _service_account_file_ }}"
+        state: present
+        schema:
+          fields:
+            - name: id
+              type: INTEGER
+              mode: REQUIRED
+            - name: nombre
+              type: STRING
+              mode: REQUIRED
+            - name: email
+              type: STRING
+              mode: REQUIRED
+      tags:
+        - table
+
+    # - name: Create new serviceaccount in Google Cloud
+    #   register: sa
+    #   google.cloud.gcp_iam_service_account:
+    #     name: henry16@example.com-g5wxq.iam.gserviceaccount.com
+    #     display_name: Ansible Service Account
+    #     project: "{{ project_id }}"
+    #     auth_kind: serviceaccount
+
+    - name: Asignar rol de BigQuery a un usuario
+      google.cloud.gcp_iam_policy_binding:
+        resource: "projects/{{ project_id }}"
+        policy_bindings:
+          - role: roles/bigquery.dataViewer
+            members:
+              - user:fegarcia@redhat.com
+        auth_kind: serviceaccount
+        # service_account_file: /path/to/service-account.json
+        state: present
+      tags: 
+        - iam
