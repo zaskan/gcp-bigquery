@@ -117,10 +117,10 @@
           policy:
             bindings: >
               {{
-                current_policy.json.policy.bindings + 
                 [{'role': 'roles/bigquery.dataViewer', 'members': ['user:' + user_email]}]
               }}
           updateMask: "bindings"
       register: role_bind
       tags:
         - rolebind
+        
