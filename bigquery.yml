@@ -57,8 +57,6 @@
     #     project: "{{ project_id }}"
     #     auth_kind: serviceaccount
 
-
-
     - name: Insert data into BigQuery table
       ansible.builtin.uri:
         url: "https://bigquery.googleapis.com/bigquery/v2/projects/{{ project_id }}/datasets/{{ dataset_id }}/tables/{{ table_id }}/insertAll"
@@ -107,7 +105,7 @@
 
     - name: Asignar role para consulta al dataset
       ansible.builtin.uri:
-        url: "https://bigquery.googleapis.com/bigquery/v2/projects/{{ project_id }}/roles/bigquery.dataViewer"
+        url: "https://cloudresourcemanager.googleapis.com/bigquery/v2/projects/{{ project_id }}/roles/bigquery.dataViewer"
         method: POST
         headers:
           Authorization: "Bearer {{ gcp_access_token }}"
