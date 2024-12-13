@@ -8,6 +8,7 @@
     project_id: "openenv-g5wxq"
     dataset_id: "demo_dataset"
     table_id: "clientes"
+    view_id: "vista_clientes"
   tasks:
     - name: Create a Google BigQuery Dataset
       register: create_dataset
@@ -103,7 +104,7 @@
             "tableReference": {
               "projectId": "{{ project_id }}",
               "datasetId": "{{ dataset_id }}",
-              "tableId": "{{ table_id }}"
+              "tableId": "{{ view_id }}"
             },
             "view": {
               "query": "SELECT nombre, email FROM `openenv-g5wxq.demo_dataset.clientes`"
