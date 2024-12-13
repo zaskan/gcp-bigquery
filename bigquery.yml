@@ -102,9 +102,8 @@
         project: "{{ project_id }}"
         auth_kind: serviceaccount
         view:
-          use_legacy_sql: true
-          user_defined_function_resources:
-            - inline_code: "SELECT nombre, email FROM `openenv-g5wxq.demo_dataset.clientes`;"
+          use_legacy_sql: false
+          query: "SELECT nombre, email FROM `openenv-g5wxq.demo_dataset.clientes`;"
 
 
     - name: Asignar role para consulta al dataset
