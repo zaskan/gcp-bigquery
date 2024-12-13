@@ -107,7 +107,7 @@
               "tableId": "{{ view_id }}"
             },
             "view": {
-              "query": "SELECT nombre, email FROM \\'openenv-pwhc4.demo_dataset.clientes\\`"
+              "query": "SELECT nombre, email FROM \'openenv-pwhc4.demo_dataset.clientes\`"
             }
           }
       register: role_bind
