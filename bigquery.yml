@@ -92,7 +92,7 @@
 
     - name: Crear una vista para el Dataset de BigQuery
       ansible.builtin.uri:
-        url: "https://bigquery.googleapis.com/bigquery/v2/projects/{{ project_id }}/datasets/{{ dataset_id }}/tables"
+        url: "https://www.googleapis.com/bigquery/v2/projects/{{ project_id }}/datasets/{{ dataset_id }}/tables"
         method: POST
         headers:
           Authorization: "Bearer {{ gcp_access_token }}"
