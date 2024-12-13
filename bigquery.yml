@@ -91,21 +91,27 @@
         - data
 
     - name: Crear una vista para el Dataset de BigQuery
-      register: create_view
-      google.cloud.gcp_bigquery_table:
-        name: vista_clientes
-        dataset: "{{ dataset_id }}"
-        table_reference:
-          dataset_id: "{{ dataset_id }}"
-          project_id: "{{ project_id }}"
-          table_id: "{{ table_id }}"
-        project: "{{ project_id }}"
-        auth_kind: serviceaccount
-        view:
-          use_legacy_sql: true
-          user_defined_function_resources:
-            - inline_code: "SELECT nombre, email FROM `openenv-g5wxq.demo_dataset.clientes`;"
-
+      ansible.builtin.uri:
+        url: "https://bigquery.googleapis.com/bigquery/v2/projects/{{ project_id }}/datasets/{{ dataset_id }}/tables"
+        method: POST
+        headers:
+          Authorization: "Bearer {{ gcp_access_token }}"
+          Content-Type: "application/json"
+        body_format: json
+        body: |
+          {
+            "tableReference": {
+              "projectId": "{{ project_id }}",
+              "datasetId": "{{ dataset_id }}",
+              "tableId": "{{ table_id }}"
+            },
+            "view": {
+              "query": "SELECT nombre, email FROM `openenv-g5wxq.demo_dataset.clientes`"
+            }
+          }
+      register: role_bind
+      tags:
+        - view
 
     - name: Asignar role para consulta al dataset
       ansible.builtin.uri:
