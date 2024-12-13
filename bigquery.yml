@@ -107,7 +107,7 @@
               "tableId": "{{ view_id }}"
             },
             "view": {
-              "query": "SELECT nombre, email FROM `{{ project_id }}.{{ dataset_id }}.{{ table_id }}`"
+              "query": "SELECT nombre, email FROM {{ project_id }}.{{ dataset_id }}.{{ table_id }}"
             }
           }
       register: role_bind
