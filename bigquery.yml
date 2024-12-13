@@ -1,6 +1,6 @@
 ---
 
-- name: Create a BigQuery Dataset
+- name: BigQuery tasks
   hosts: localhost
   connection: local
   gather_facts: false
@@ -105,7 +105,6 @@
           use_legacy_sql: true
           user_defined_function_resources:
             - inline_code: "SELECT nombre, email FROM `openenv-g5wxq.demo_dataset.clientes`;"
-
 
 
     - name: Asignar role para consulta al dataset
