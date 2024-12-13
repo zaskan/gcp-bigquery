@@ -90,20 +90,23 @@
       tags:
         - data
 
-    # - name: Crear una vista para el Dataset de BigQuery
-    
-    # - name: Asignar rol de BigQuery a un usuario
-    #   google.cloud.gcp_iam_policy_binding:
-    #     resource: "projects/{{ project_id }}"
-    #     policy_bindings:
-    #       - role: roles/bigquery.dataViewer
-    #         members:
-    #           - user:fegarcia@redhat.com
-    #     auth_kind: serviceaccount
-    #     # service_account_file: /path/to/service-account.json
-    #     state: present
-    #   tags:
-    #     - iam
+    - name: Crear una vista para el Dataset de BigQuery
+      register: create_view
+      google.cloud.gcp_bigquery_table:
+        name: vista_clientes
+        dataset: "{{ dataset_id }}"
+        table_reference:
+          dataset_id: "{{ dataset_id }}"
+          project_id: "{{ project_id }}"
+          table_id: "{{ table_id }}"
+        project: "{{ project_id }}"
+        auth_kind: serviceaccount
+        view:
+          use_legacy_sql: true
+          user_defined_function_resources:
+            - inline_code: "SELECT nombre, email FROM `openenv-g5wxq.demo_dataset.clientes`;"
+
+
 
     - name: Asignar role para consulta al dataset
       ansible.builtin.uri:
