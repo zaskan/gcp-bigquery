@@ -90,7 +90,7 @@
       tags:
         - data
 
-    - name: Crear una vista para el Dataset de BigQuery
+    # - name: Crear una vista para el Dataset de BigQuery
     
     # - name: Asignar rol de BigQuery a un usuario
     #   google.cloud.gcp_iam_policy_binding:
