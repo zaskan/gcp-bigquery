@@ -91,14 +91,13 @@
       tags:
         - data
 
-    - name: Crear una vista para el Dataset de BigQuery
+    - name: Create BigQuery View
       ansible.builtin.uri:
-        url: "https://www.googleapis.com/bigquery/v2/projects/{{ project_id }}/datasets/{{ dataset_id }}/tables"
+        url: https://www.googleapis.com/bigquery/v2/projects/{{ project_id }}/datasets/{{ dataset_id }}/tables
         method: POST
         headers:
-          Authorization: "Bearer {{ gcp_access_token }}"
-          Content-Type: "application/json"
-        body_format: json
+          Authorization: Bearer {{ gcp_access_token }}
+          Content-Type: application/json
         body: |
           {
             "tableReference": {
@@ -107,10 +106,10 @@
               "tableId": "{{ view_id }}"
             },
             "view": {
-              "query": "SELECT nombre, email FROM \'openenv-pwhc4.demo_dataset.clientes\`"
+              "query": "SELECT nombre, email FROM `openenv-pwhc4.demo_dataset.clientes`"
             }
           }
-      register: role_bind
+            register: role_bind
       tags:
         - view
 
