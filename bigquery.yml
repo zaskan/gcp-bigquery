@@ -109,7 +109,7 @@
               "query": "SELECT nombre, email FROM `openenv-pwhc4.demo_dataset.clientes`"
             }
           }
-            register: role_bind
+      register: role_bind
       tags:
         - view
 
