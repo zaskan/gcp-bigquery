@@ -115,11 +115,18 @@
         body_format: json
         body: |
           {
-            "role": "roles/bigquery.dataViewer",
-            "members": [
-              "user:{{ user_email }}"
-            ]
+            policy: {
+              bindings: [
+                {
+                  "role": "roles/bigquery.dataViewer",
+                  "members": [
+                    "user:{{ user_email }}"
+                  ]
+                }
+              ]
+            }
           }
+
       register: role_bind
       tags:
         - rolebind
