@@ -99,7 +99,7 @@
           Authorization: "Bearer {{ gcp_access_token }}"
           Content-Type: "application/json"
         body_format: json
-        body: |-
+        body: |
           {
             "tableReference": {
               "projectId": "{{ project_id }}",
@@ -107,7 +107,7 @@
               "tableId": "{{ view_id }}"
             },
             "view": {
-              "query": "SELECT nombre, email FROM \\`{{ project_id }}.{{ dataset_id }}.{{ table_id }}\\`"
+              "query": "SELECT nombre, email FROM `openenv-pwhc4.demo_dataset.clientes`"
             }
           }
       register: role_bind
