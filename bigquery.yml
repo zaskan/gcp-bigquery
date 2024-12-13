@@ -99,7 +99,7 @@
           Authorization: "Bearer {{ gcp_access_token }}"
           Content-Type: "application/json"
         body_format: json
-        body: |
+        body: |-
           {
             "tableReference": {
               "projectId": "{{ project_id }}",
