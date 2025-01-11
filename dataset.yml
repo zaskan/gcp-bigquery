@@ -1,14 +1,9 @@
 ---
-- name: Create a Dataset
+- name: Operate Google BigQuery API
   hosts: localhost
   connection: local
   gather_facts: false
   tasks:
-    - name: Create a BigQuery Dataset
+    - name: Include BigQuery Caixa Role
       ansible.builtin.include_role:
         name: big_query_caixa
-      vars:
-        project_id: "openenv-9j6kf"
-        dataset_id: "demo_dataset"
-      tags:
-        - dataset
