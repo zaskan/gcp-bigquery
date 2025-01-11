@@ -1,0 +1,123 @@
+---
+- name: BigQuery tasks
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    project_id: "openenv-9j6kf"
+    dataset_id: "demo_dataset"
+    table_id: "clientes"
+    view_id: "vista_clientes"
+    user_email: fegarcia@redhat.com
+  tasks:
+    - name: Create a Google BigQuery Dataset
+      register: create_dataset
+      google.cloud.gcp_bigquery_dataset:
+        name: "{{ dataset_id }}"
+        dataset_reference:
+          dataset_id: "{{ dataset_id }}"
+        project: "{{ project_id }}"
+        auth_kind: accesstoken
+        access_token: "{{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+        # service_account_file: "{{ _service_account_file_ }}"
+        state: present
+      tags:
+        - dataset
+
+    - name: Create a new table in BigQuery
+      register: create_table
+      google.cloud.gcp_bigquery_table:
+        name: "{{ table_id }}"
+        dataset: "{{ dataset_id }}"
+        table_reference:
+          dataset_id: "{{ dataset_id }}"
+          project_id: "{{ project_id }}"
+          table_id: "{{ table_id }}"
+        project: "{{ project_id }}"
+        auth_kind: accesstoken
+        access_token: "{{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+        # service_account_file: "{{ _service_account_file_ }}"
+        state: present
+        schema:
+          fields:
+            - name: id
+              type: INTEGER
+              mode: REQUIRED
+            - name: nombre
+              type: STRING
+              mode: REQUIRED
+            - name: email
+              type: STRING
+              mode: REQUIRED
+      tags:
+        - table
+
+    # - name: Create new serviceaccount in Google Cloud
+    #   register: sa
+    #   google.cloud.gcp_iam_service_account:
+    #     name: henry16@example.com-g5wxq.iam.gserviceaccount.com
+    #     display_name: Ansible Service Account
+    #     project: "{{ project_id }}"
+    #     auth_kind: serviceaccount
+
+    - name: Insert data into BigQuery table
+      ansible.builtin.uri:
+        url: "https://bigquery.googleapis.com/bigquery/v2/projects/{{ project_id }}/datasets/{{ dataset_id }}/tables/{{ table_id }}/insertAll"
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+          Content-Type: "application/json"
+        body_format: json
+        body: "{{ lookup('ansible.builtin.file', 'clientes.json') }}"
+      tags:
+        - data
+
+    - name: Create BigQuery View
+      ansible.builtin.uri:
+        url: https://www.googleapis.com/bigquery/v2/projects/{{ project_id }}/datasets/{{ dataset_id }}/tables
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+          Content-Type: application/json
+        body_format: json
+        body: |
+          {
+            "tableReference": {
+              "projectId": "{{ project_id }}",
+              "datasetId": "{{ dataset_id }}",
+              "tableId": "{{ view_id }}"
+            },
+            "view": {
+              "setUseLegacySql": true,
+              "query": "SELECT nombre, email FROM [{{ project_id }}:demo_dataset.clientes]"
+            }
+          }
+      register: role_bind
+      tags:
+        - view
+
+    - name: Asignar role para consulta al dataset
+      ansible.builtin.uri:
+        url: "https://cloudresourcemanager.googleapis.com/v1/projects/{{ project_id }}:setIamPolicy"
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+          Content-Type: "application/json"
+        body_format: json
+        body: |
+          {
+            policy: {
+              bindings: [
+                {
+                  "role": "roles/bigquery.dataViewer",
+                  "members": [
+                    "user:{{ user_email }}"
+                  ]
+                }
+              ]
+            }
+          }
+
+      register: role_bind
+      tags:
+        - rolebind
