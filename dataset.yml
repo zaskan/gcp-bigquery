@@ -1,10 +1,10 @@
 ---
-- name: Create a Google BigQuery Dataset
+- name: Create a Dataset
   hosts: localhost
   connection: local
   gather_facts: false
   tasks:
-    - name: Create a Google BigQuery Dataset
+    - name: Create a BigQuery Dataset
       ansible.builtin.include_role:
         name: big_query_caixa
       vars:

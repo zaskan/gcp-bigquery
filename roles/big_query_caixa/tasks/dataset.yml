@@ -1,5 +1,5 @@
 ---
-- name: Create a Google BigQuery Dataset
+- name: Create a Google BigQuery Dataset Task
   google.cloud.gcp_bigquery_dataset:
     name: "{{ big_query_caixa_dataset_id }}"
     dataset_reference:

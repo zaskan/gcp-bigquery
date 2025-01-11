@@ -1,7 +1,7 @@
 ---
 # tasks file for big_query_caixa
 
-- name: Create a Google BigQuery Dataset
+- name: Create a Google BigQuery Dataset using Role
   ansible.builtin.include_tasks:
     file: dataset.yml
   tags:
