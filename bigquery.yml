@@ -5,7 +5,7 @@
   connection: local
   gather_facts: false
   vars:
-    project_id: "openenv-g5wxq"
+    project_id: "openenv-b9dlv"
     dataset_id: "demo_dataset"
     table_id: "clientes"
     view_id: "vista_clientes"
