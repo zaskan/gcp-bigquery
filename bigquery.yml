@@ -8,6 +8,7 @@
     dataset_id: "demo_dataset"
     table_id: "clientes"
     view_id: "vista_clientes"
+    user_email: rafsanch@redhat.com
   tasks:
     - name: Create a Google BigQuery Dataset
       register: create_dataset
