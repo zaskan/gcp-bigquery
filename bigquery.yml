@@ -109,7 +109,7 @@
             },
             "view": {
               "setUseLegacySql": true,
-              "query": "SELECT nombre, email FROM [openenv-pwhc4:demo_dataset.clientes]"
+              "query": "SELECT nombre, email FROM [openenv-b9dlv:demo_dataset.clientes]"
             }
           }
       register: role_bind
