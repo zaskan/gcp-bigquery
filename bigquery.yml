@@ -68,28 +68,7 @@
           Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
           Content-Type: "application/json"
         body_format: json
-        body:
-          rows:
-            - json: {"id": 1, "nombre": "Juan Pérez", "email": "juan.perez@example.com"}
-            - json: {"id": 2, "nombre": "Ana García", "email": "ana.garcia@example.com"}
-            - json: {"id": 3, "nombre": "Luis Martínez", "email": "luis.martinez@example.com"}
-            - json: {"id": 4, "nombre": "Carla Rodríguez", "email": "carla.rodriguez@example.com"}
-            - json: {"id": 5, "nombre": "José López", "email": "jose.lopez@example.com"}
-            - json: {"id": 6, "nombre": "Marta Sánchez", "email": "marta.sanchez@example.com"}
-            - json: {"id": 7, "nombre": "David Fernández", "email": "david.fernandez@example.com"}
-            - json: {"id": 8, "nombre": "Patricia González", "email": "patricia.gonzalez@example.com"}
-            - json: {"id": 9, "nombre": "Francisco Pérez", "email": "francisco.perez@example.com"}
-            - json: {"id": 10, "nombre": "Raquel Díaz", "email": "raquel.diaz@example.com"}
-            - json: {"id": 11, "nombre": "Sergio García", "email": "sergio.garcia@example.com"}
-            - json: {"id": 12, "nombre": "Lucía Romero", "email": "lucia.romero@example.com"}
-            - json: {"id": 13, "nombre": "Javier Jiménez", "email": "javier.jimenez@example.com"}
-            - json: {"id": 14, "nombre": "Pablo Ruiz", "email": "pablo.ruiz@example.com"}
-            - json: {"id": 15, "nombre": "Elena Martínez", "email": "elena.martinez@example.com"}
-            - json: {"id": 16, "nombre": "Carlos Gómez", "email": "carlos.gomez@example.com"}
-            - json: {"id": 17, "nombre": "Isabel Herrera", "email": "isabel.herrera@example.com"}
-            - json: {"id": 18, "nombre": "Manuel López", "email": "manuel.lopez@example.com"}
-            - json: {"id": 19, "nombre": "Verónica Ortega", "email": "veronica.ortega@example.com"}
-            - json: {"id": 20, "nombre": "Fernando Sánchez", "email": "fernando.sanchez@example.com"}
+        body: "{{ lookup('ansible.builtin.file', 'clientes.json') }}"
       tags:
         - data
 
@@ -110,7 +89,7 @@
             },
             "view": {
               "setUseLegacySql": true,
-              "query": "SELECT nombre, email FROM [openenv-b9dlv:demo_dataset.clientes]"
+              "query": "SELECT nombre, email FROM [{{ project_id }}:demo_dataset.clientes]"
             }
           }
       register: role_bind
