@@ -1,0 +1,22 @@
+---
+- name: Create BigQuery View
+  ansible.builtin.uri:
+    url: https://www.googleapis.com/bigquery/v2/projects/{{ project_id }}/datasets/{{ dataset_id }}/tables
+    method: POST
+    headers:
+      Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+      Content-Type: application/json
+    body_format: json
+    body: |
+      {
+        "tableReference": {
+          "projectId": "{{ project_id }}",
+          "datasetId": "{{ dataset_id }}",
+          "tableId": "{{ view_id }}"
+        },
+        "view": {
+          "setUseLegacySql": true,
+          "query": "SELECT {{ fields }} }} FROM [{{ project_id }}:{{ dataset_id }}.{{ table_id }}]"
+        }
+      }
+  register: role_bind

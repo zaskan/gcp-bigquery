@@ -1,0 +1,10 @@
+---
+- name: Insert data into BigQuery table
+  ansible.builtin.uri:
+    url: "https://bigquery.googleapis.com/bigquery/v2/projects/{{ project_id }}/datasets/{{ dataset_id }}/tables/{{ table_id }}/insertAll"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+      Content-Type: "application/json"
+    body_format: json
+    body: "{{ lookup('ansible.builtin.file', 'clientes.json') }}"

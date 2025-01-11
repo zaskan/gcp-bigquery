@@ -1,0 +1,37 @@
+---
+# tasks file for big_query_caixa
+
+- name: Create a Google BigQuery Dataset
+  ansible.builtin.include_tasks:
+    file: dataset.yml
+  tags:
+    - never
+    - dataset
+
+- name: Create a new table in BigQuery
+  ansible.builtin.include_tasks:
+    file: table.yml
+  tags:
+    - never
+    - table
+
+- name: Insert data into BigQuery table
+  ansible.builtin.include_tasks:
+    file: insert.yml
+  tags:
+    - never
+    - data
+
+- name: Create BigQuery View
+  ansible.builtin.include_tasks:
+    file: view.yml
+  tags:
+    - never
+    - view
+
+- name: Asignar role para consulta al dataset
+  ansible.builtin.include_tasks:
+    file: role.yml
+  tags:
+    - never
+    - rolebind

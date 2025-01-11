@@ -1,0 +1,11 @@
+---
+- name: Create a Google BigQuery Dataset
+  google.cloud.gcp_bigquery_dataset:
+    name: "{{ big_query_caixa_dataset_id }}"
+    dataset_reference:
+      dataset_id: "{{ big_query_caixa_dataset_id }}"
+    project: "{{ big_query_caixa_project_id }}"
+    auth_kind: accesstoken
+    access_token: "{{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+    state: present
+  register: create_dataset

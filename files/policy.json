@@ -1,0 +1,12 @@
+{
+    policy: {
+      bindings: [
+        {
+          "role": "roles/bigquery.dataViewer",
+          "members": [
+            "user: dummy@example.com"
+          ]
+        }
+      ]
+    }
+  }

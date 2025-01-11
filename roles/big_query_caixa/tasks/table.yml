@@ -1,0 +1,15 @@
+---
+- name: Create a new table in BigQuery
+  google.cloud.gcp_bigquery_table:
+    name: "{{ table_id }}"
+    dataset: "{{ dataset_id }}"
+    table_reference:
+      dataset_id: "{{ dataset_id }}"
+      project_id: "{{ project_id }}"
+      table_id: "{{ table_id }}"
+    project: "{{ project_id }}"
+    auth_kind: accesstoken
+    access_token: "{{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+    state: present
+    schema: "{{ lookup('ansible.builtin.file', 'clientes_schema.yaml') }}"
+  register: create_table
