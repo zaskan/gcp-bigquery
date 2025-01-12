@@ -16,7 +16,7 @@
         },
         "view": {
           "setUseLegacySql": true,
-          "query": "SELECT {{ fields }} }} FROM [{{ project_id }}:{{ dataset_id }}.{{ table_id }}]"
+          "query": "SELECT {{ fields }} FROM [{{ project_id }}:{{ dataset_id }}.{{ table_id }}]"
         }
       }
   register: role_bind
