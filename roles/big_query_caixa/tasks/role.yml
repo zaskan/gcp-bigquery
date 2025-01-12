@@ -7,5 +7,17 @@
       Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
       Content-Type: "application/json"
     body_format: json
-    body: "{{ lookup('ansible.builtin.url', policy_url, split_lines=False ) | from_json }}"
+    body: |
+          {
+            policy: {
+              bindings: [
+                {
+                  "role": "roles/bigquery.{{ role }}",
+                  "members": [
+                    "user:{{ user_email }}"
+                  ]
+                }
+              ]
+            }
+          }
   register: role_bind
