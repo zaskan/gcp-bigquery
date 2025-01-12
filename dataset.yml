@@ -3,7 +3,5 @@
   hosts: localhost
   connection: local
   gather_facts: false
-  tasks:
-    - name: Include BigQuery Caixa Role
-      ansible.builtin.import_role:
-        name: big_query_caixa
+  roles:
+    - role: big_query_caixa
