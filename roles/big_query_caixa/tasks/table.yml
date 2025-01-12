@@ -11,5 +11,5 @@
     auth_kind: accesstoken
     access_token: "{{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
     state: present
-    schema: "{{ lookup('ansible.builtin.url', schema_url ) }}"
+    schema: "{{ lookup('ansible.builtin.url', schema_url ) | from_json }}"
   register: create_table
