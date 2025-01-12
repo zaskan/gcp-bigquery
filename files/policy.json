@@ -4,7 +4,7 @@
         {
           "role": "roles/bigquery.dataViewer",
           "members": [
-            "user: dummy@example.com"
+            "user: fegarcia@redhat.com"
           ]
         }
       ]

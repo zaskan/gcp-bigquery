@@ -7,5 +7,5 @@
       Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
       Content-Type: "application/json"
     body_format: json
-    body: "{{ lookup('ansible.builtin.file', 'policy.json') }}"
+    body: "{{ lookup('ansible.builtin.url', policy_url, split_lines=False ) | from_json }}"
   register: role_bind
