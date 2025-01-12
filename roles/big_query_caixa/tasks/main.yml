@@ -4,23 +4,23 @@
 - name: Create a Google BigQuery Dataset using Role
   ansible.builtin.include_tasks:
     file: dataset.yml
-  when: dataset is defined or all is defined
+  when: "'dataset' in operation or 'all' in operation"
 
 - name: Create a new table in BigQuery
   ansible.builtin.include_tasks:
     file: table.yml
-  when: table is defined or all is defined
+  when: "'table' in operation or 'all' in operation"
 
 - name: Insert data into BigQuery table
   ansible.builtin.include_tasks:
     file: insert.yml
-  when: data is defined or all is defined
+  when: "'data' in operation or 'all' in operation"
 
 - name: Create BigQuery View
   ansible.builtin.include_tasks:
     file: view.yml
-  when: view is defined or all is defined
+  when: "'view' in operation or 'all' in operation"
 
 - name: Asignar role para consulta al dataset
   ansible.builtin.include_tasks:
-  when: rolebind is defined or all is defined
+  when: "'rolebind' in operation or 'all' in operation"
