@@ -14,7 +14,7 @@
 - name: Insert data into BigQuery table
   ansible.builtin.include_tasks:
     file: insert.yml
-  when: "'data' in operation or 'all' in operation"
+  when: "'insert' in operation or 'all' in operation"
 
 - name: Create BigQuery View
   ansible.builtin.include_tasks:
