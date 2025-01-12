@@ -5,5 +5,5 @@
   gather_facts: false
   tasks:
     - name: Include BigQuery Caixa Role
-      ansible.builtin.include_role:
+      ansible.builtin.import_role:
         name: big_query_caixa
