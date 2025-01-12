@@ -7,4 +7,4 @@
       Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
       Content-Type: "application/json"
     body_format: json
-    body: "{{ lookup('ansible.builtin.file', 'clientes.json') }}"
+    body: "{{ lookup('ansible.builtin.url', data_url )}}"
