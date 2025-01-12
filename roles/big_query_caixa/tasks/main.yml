@@ -23,4 +23,5 @@
 
 - name: Asignar role para consulta al dataset
   ansible.builtin.include_tasks:
+    file: role.yml
   when: "'rolebind' in operation or 'all' in operation"
