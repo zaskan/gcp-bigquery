@@ -1,10 +1,10 @@
 {
-    policy: {
-      bindings: [
+    "policy": {
+      "bindings": [
         {
           "role": "roles/bigquery.dataViewer",
           "members": [
-            "user: fegarcia@redhat.com"
+            {"user": "fegarcia@redhat.com"}
           ]
         }
       ]
