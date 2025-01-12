@@ -1,5 +1,32 @@
 ---
-- name: Assign role to dataset
+- name: Get current project IAM policy
+  ansible.builtin.uri:
+    url: "https://cloudresourcemanager.googleapis.com/v1/projects/{{ project_id }}:getIamPolicy"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+      Content-Type: "application/json"
+    return_content: true
+  register: current_policy
+
+- name: Merge in new binding
+  ansible.builtin.set_fact:
+    new_policy_json: >-
+      {{
+        current_policy.json |
+        combine({
+          "bindings": (current_policy.json.bindings + [
+            {
+              "role": "roles/bigquery.dataEditor",
+              "members": [
+                "user:"+service_account_email+""
+              ]
+            }
+          ])
+        })
+      }}
+
+- name: Update project IAM policy
   ansible.builtin.uri:
     url: "https://cloudresourcemanager.googleapis.com/v1/projects/{{ project_id }}:setIamPolicy"
     method: POST
@@ -7,17 +34,7 @@
       Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
       Content-Type: "application/json"
     body_format: json
-    body: |
-          {
-            policy: {
-              bindings: [
-                {
-                  "role": "roles/bigquery.{{ role }}",
-                  "members": [
-                    "user:{{ user_email }}"
-                  ]
-                }
-              ]
-            }
-          }
-  register: role_bind
+    body:
+      policy: "{{ new_policy_json }}"
+    return_content: true
+  register: update_result
