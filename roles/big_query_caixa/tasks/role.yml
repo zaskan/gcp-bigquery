@@ -17,9 +17,9 @@
         combine({
           "bindings": (current_policy.json.bindings + [
             {
-              "role": "roles/bigquery.dataEditor",
+              "role": "roles/"+role+"",
               "members": [
-                "user:"+service_account_email+""
+                ""+principal+":"+service_account_email+""
               ]
             }
           ])
