@@ -19,7 +19,7 @@
             {
               "role": "roles/"+role+"",
               "members": [
-                ""+principal+":"+service_account_email+""
+                ""+principal+":"+object+""
               ]
             }
           ])
