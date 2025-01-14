@@ -7,7 +7,7 @@
         port: 5000
   rules:
     - name: Print event
-      condition: event.payload.ref != "refs/heads/rolebinding"
+      condition: event.payload != ""
       action:
         run_job_template:
           name: "Add Rolebinding via Gitops"
