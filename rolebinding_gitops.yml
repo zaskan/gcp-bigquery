@@ -1,9 +1,13 @@
 ---
 - name: Manage Rolebinding
   hosts: localhost
-  connection: local
   gather_facts: false
   tasks:
+    - name: Create git_directory
+      ansible.builtin.file:
+        path: /tmp/rolebinding
+        state: directory
+
     - name: Synchronize repository
       ansible.builtin.include_role:
         name: demos.utils.git
