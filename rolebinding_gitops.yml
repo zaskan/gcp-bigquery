@@ -5,10 +5,11 @@
   gather_facts: false
   tasks:
     - name: Synchronize repository
-      demos.utils.git:
+      ansible.builtin.include_role:
+        name: demos.utils.git
+      vars:
         operation: clone
         repository: https://github.com/zaskan/gcp-bigquery.git
         directory: /tmp
 
     - debug: msg="{{ lookup('ansible.builtin.file'. '/tmp/rolebinding.json') }}"
-        
