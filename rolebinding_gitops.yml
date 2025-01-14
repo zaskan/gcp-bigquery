@@ -22,23 +22,19 @@
       args:
         chdir: "/tmp/"
 
-    - name: Get contents of the file
-      ansible.builtin.set_fact:
-        rolebinding: "{{ lookup('ansible.builtin.file', '/tmp/gcp-bigquery/rolebinding.json') }}"
-
     - name: Convert roles to dict
       ansible.builtin.set_fact:
-        roles_dict: "{{ rolebinding | from_json }}"
+        rolebinding: "{{ lookup('ansible.builtin.file', '/tmp/gcp-bigquery/rolebinding.json') | from_json }}"
 
     - name: Replace etag
       ansible.utils.update_fact:
         updates:
-          - path: roles_dict.etag
+          - path: rolebinding.etag
             value: "{{ etag }}"
 
-    - name: Print 
+    - name: Print
       ansible.builtin.debug:
-        msg: "{{ roles_dict | to_json }}"
+        msg: "{{ rolebinding | to_json }}"
 
 #    - name: Update project IAM policy
 #      ansible.builtin.uri:
