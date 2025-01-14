@@ -3,6 +3,17 @@
   hosts: localhost
   gather_facts: false
   tasks:
+    - name: Get current project IAM policy
+      ansible.builtin.uri:
+        url: "https://cloudresourcemanager.googleapis.com/v1/projects/{{ project_id }}:getIamPolicy"
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+          Content-Type: "application/json"
+        return_content: true
+      register: current_policy
+
+    - debug: msg="{{ current_policy.etag }}"
 
     - name: Clone repository
       ansible.builtin.command: "git clone -b devel https://github.com/zaskan/gcp-bigquery.git"
