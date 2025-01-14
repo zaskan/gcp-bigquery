@@ -13,7 +13,7 @@
         return_content: true
       register: current_policy
 
-    - debug: msg="{{ current_policy.etag }}"
+    - debug: msg="{{ current_policy.content.etag }}"
 
     - name: Clone repository
       ansible.builtin.command: "git clone -b devel https://github.com/zaskan/gcp-bigquery.git"
