@@ -9,5 +9,10 @@
     - name: Print event
       condition: event.payload.ref != "refs/heads/rolebinding"
       action:
-        debug:
-          msg: "Message 1 {{ event.payload.after }}"
+        run_job_template:
+          name: "Add Rolebinding via Gitops"
+          organization: Default
+          job_args:
+            extra_vars:
+              webhook_payload: "{{ event.payload }}"
+
