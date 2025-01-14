@@ -8,9 +8,9 @@
         port: 5000
   ## Define the conditions we are looking for
   rules:
-    - name: Say Hello
-      condition: event.payload.message == "Ansible is super cool"
+    - name: Print event
+      condition: event.payload.message != ""
   ## Define the action we should take should the condition be met
       action:
-        run_playbook:
-          name: test.yml
+        debug:
+          msg: "Message 1 {{ event }}"
