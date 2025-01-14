@@ -5,7 +5,7 @@
   tasks:
 
     - name: Clone repository
-      ansible.builtin.command: "git clone https://github.com/zaskan/gcp-bigquery.git"
+      ansible.builtin.command: "git clone -b devel https://github.com/zaskan/gcp-bigquery.git"
       args:
         chdir: "/tmp/"
 
