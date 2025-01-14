@@ -3,6 +3,12 @@
     "etag": "BwYrlx/itV4=",
     "bindings": [
       {
+            "role": "roles/bigquery.dataEditor",
+            "members": [
+              "user:fegarciaa@redhat.com"
+            ]
+      },
+      {
         "role": "roles/compute.serviceAgent",
         "members": [
           "serviceAccount:service-76302062416@compute-system.iam.gserviceaccount.com"
