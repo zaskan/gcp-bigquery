@@ -9,4 +9,20 @@
       args:
         chdir: "/tmp/"
 
-    - debug: msg="{{ lookup('ansible.builtin.file', '/tmp/gcp-bigquery/rolebinding.json') }}"
+    - name: Get contents of the file
+      ansible.builtin.set_fact:
+        rolebinding: "{{ lookup('ansible.builtin.file', '/tmp/gcp-bigquery/rolebinding.json') }}"
+
+    - name: Update project IAM policy
+      ansible.builtin.uri:
+        url: "https://cloudresourcemanager.googleapis.com/v1/projects/{{ project_id }}:setIamPolicy"
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+          Content-Type: "application/json"
+        body_format: json
+        body:
+          policy: "{{ rolebinding | from_json }}"
+        return_content: true
+      register: update_result
+
