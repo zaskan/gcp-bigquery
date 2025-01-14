@@ -28,7 +28,7 @@
 
     - name: Convert roles to dict
       ansible.builtin.set_fact:
-        roles_dict: "{{ rolebinding | from_json }}"
+        roles_dict: "{{ rolebinding | to_json }}"
 
     - name: Replace etag
       ansible.utils.update_fact:
