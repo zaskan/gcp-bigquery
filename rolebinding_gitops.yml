@@ -12,4 +12,4 @@
         git_repository: https://github.com/zaskan/gcp-bigquery.git
         git_directory: /tmp/rolebinding
 
-    - debug: msg="{{ lookup('ansible.builtin.file'. '/tmp/rolebinding/rolebinding.json') }}"
+    - debug: msg="{{ lookup('ansible.builtin.file', '/tmp/rolebinding/rolebinding.json') }}"
