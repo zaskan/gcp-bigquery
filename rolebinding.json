@@ -1,0 +1,34 @@
+  {
+    "version": 1,
+    "etag": "BwYrlx/itV4=",
+    "bindings": [
+      {
+        "role": "roles/compute.serviceAgent",
+        "members": [
+          "serviceAccount:service-76302062416@compute-system.iam.gserviceaccount.com"
+        ]
+      },
+      {
+        "role": "roles/editor",
+        "members": [
+          "serviceAccount:76302062416-compute@developer.gserviceaccount.com",
+          "serviceAccount:76302062416@cloudservices.gserviceaccount.com"
+        ]
+      },
+      {
+        "role": "roles/owner",
+        "members": [
+          "group:rhpds-opentlc-infra@redhat.com",
+          "serviceAccount:opentlc-mgr@rhpds-345620.iam.gserviceaccount.com",
+          "serviceAccount:sa-openenv-g576c@rhpds-345620.iam.gserviceaccount.com",
+          "user:rafsanch@redhat.com"
+        ]
+      },
+      {
+        "role": "roles/websecurityscanner.serviceAgent",
+        "members": [
+          "serviceAccount:service-76302062416@gcp-sa-websecurityscanner.iam.gserviceaccount.com"
+        ]
+      }
+    ]
+  }
