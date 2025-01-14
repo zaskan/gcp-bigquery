@@ -11,5 +11,10 @@
         git_operation: clone
         git_repository: https://github.com/zaskan/gcp-bigquery.git
         git_directory: /tmp/rolebinding
+    
+    - command: "find /tmp/rolebinding -name 'rolebinding.json'"
+      register: file_out
 
+    - debug: msg="{{ file_out }}"
+   
     - debug: msg="{{ lookup('ansible.builtin.file', '/tmp/rolebinding/gcp-bigquery/rolebinding.json') }}"
