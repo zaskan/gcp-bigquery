@@ -1,7 +1,7 @@
       {
         "role": "roles/bigquery.dataEditor",
         "members": [
-          "user:fegarciaa@redhat.com"
+          "user:fegarcia@redhat.com"
         ]
       },
 
