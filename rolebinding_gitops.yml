@@ -31,10 +31,11 @@
         updates:
           - path: rolebinding.etag
             value: "{{ etag }}"
+      register: new_rolebinding
 
     - name: Print
       ansible.builtin.debug:
-        msg: "{{ rolebinding | to_json }}"
+        msg: "{{ new_rolebinding | to_json }}"
 
 #    - name: Update project IAM policy
 #      ansible.builtin.uri:
