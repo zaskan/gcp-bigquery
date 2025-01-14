@@ -37,16 +37,16 @@
       ansible.builtin.debug:
         msg: "{{ new_rolebinding | to_json }}"
 
-#    - name: Update project IAM policy
-#      ansible.builtin.uri:
-#        url: "https://cloudresourcemanager.googleapis.com/v1/projects/{{ project_id }}:setIamPolicy"
-#        method: POST
-#        headers:
-#          Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
-#          Content-Type: "application/json"
-#        body_format: json
-#        body:
-#          policy: "{{ rolebinding }}"
-#        return_content: true
-#      register: update_result
+    - name: Update project IAM policy
+      ansible.builtin.uri:
+        url: "https://cloudresourcemanager.googleapis.com/v1/projects/{{ project_id }}:setIamPolicy"
+        method: POST
+        headers:
+          Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+          Content-Type: "application/json"
+        body_format: json
+        body:
+          policy: "{{ new_rolebinding | to_json }}"
+        return_content: true
+      register: update_result
 
