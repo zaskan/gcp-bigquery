@@ -3,22 +3,10 @@
   hosts: localhost
   gather_facts: false
   tasks:
-    - name: Create git_directory
-      ansible.builtin.file:
-        path: /tmp/rolebinding
-        state: directory
 
-    - name: Synchronize repository
-      ansible.builtin.include_role:
-        name: demos.utils.git
-      vars:
-        git_operation: clone
-        git_repository: https://github.com/zaskan/gcp-bigquery.git
-        git_directory: /tmp/rolebinding
-    
-    - command: "find /tmp/rolebinding -name 'rolebinding.json'"
-      register: file_out
+    - name: Clone repository
+      ansible.builtin.command: "git clone https://github.com/zaskan/gcp-bigquery.git"
+      args:
+        chdir: "/tmp/"
 
-    - debug: msg="{{ file_out }}"
-   
-    - debug: msg="{{ lookup('ansible.builtin.file', '/tmp/rolebinding/gcp-bigquery/rolebinding.json') }}"
+    - debug: msg="{{ lookup('ansible.builtin.file', '/tmp/gcp-bigquery/rolebinding.json') }}"
