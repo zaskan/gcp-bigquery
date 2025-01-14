@@ -1,0 +1,14 @@
+---
+- name: Manage Rolebinding
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Synchronize repository
+      demos.utils.git:
+        operation: clone
+        repository: https://github.com/zaskan/gcp-bigquery.git
+        directory: /tmp
+
+    - debug: msg="{{ lookup('ansible.builtin.file'. '/tmp/rolebinding.json') }}"
+        

@@ -2,3 +2,4 @@
 
 collections:
   - name: google.cloud
+  - name: https://github.com/zaskan/demos.utils
