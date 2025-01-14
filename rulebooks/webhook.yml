@@ -7,7 +7,7 @@
         port: 5000
   rules:
     - name: Print event
-      condition: event.payload != ""
+      condition: event.payload.ref != "refs/heads/rolebinding"
       action:
         debug:
-          msg: "Message 1 {{ event.payload }}"
+          msg: "Message 1 {{ event.payload.after }}"
