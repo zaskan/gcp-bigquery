@@ -1,4 +1,4 @@
 ---
 collections:
   - name: google.cloud
-  - src: https://github.com/zaskan/demos.utils
+  - src: git+https://github.com/zaskan/demos.utils.git
