@@ -8,8 +8,8 @@
       ansible.builtin.include_role:
         name: demos.utils.git
       vars:
-        operation: clone
-        repository: https://github.com/zaskan/gcp-bigquery.git
-        directory: /tmp
+        git_operation: clone
+        git_repository: https://github.com/zaskan/gcp-bigquery.git
+        git_directory: /tmp
 
     - debug: msg="{{ lookup('ansible.builtin.file'. '/tmp/rolebinding.json') }}"
