@@ -2,3 +2,4 @@
 collections:
   - name: google.cloud
   - src: git+https://github.com/zaskan/demos.utils.git
+    scm: git
