@@ -1,4 +1,5 @@
 ---
 collections:
   - name: google.cloud
+  - name: ansible.utils
   - name: community.general

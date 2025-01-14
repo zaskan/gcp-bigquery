@@ -13,7 +13,9 @@
         return_content: true
       register: current_policy
 
-    - debug: msg="{{ current_policy.content | from_json | community.general.json_query('etag') }}"
+    - name: Get current etag
+      ansible.builtin.set_fact:
+        etag: "{{ current_policy.content | from_json | community.general.json_query('etag') }}"
 
     - name: Clone repository
       ansible.builtin.command: "git clone -b devel https://github.com/zaskan/gcp-bigquery.git"
@@ -24,16 +26,30 @@
       ansible.builtin.set_fact:
         rolebinding: "{{ lookup('ansible.builtin.file', '/tmp/gcp-bigquery/rolebinding.json') }}"
 
-    - name: Update project IAM policy
-      ansible.builtin.uri:
-        url: "https://cloudresourcemanager.googleapis.com/v1/projects/{{ project_id }}:setIamPolicy"
-        method: POST
-        headers:
-          Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
-          Content-Type: "application/json"
-        body_format: json
-        body:
-          policy: "{{ rolebinding }}"
-        return_content: true
-      register: update_result
+    - name: Convert roles to dict
+      ansible.builtin.set_fact:
+        roles_dict: "{{ rolebinding | from_json }}"
+
+    - name: Replace etag
+      ansible.utils.update_fact:
+        updates:
+          - path: roles_dict.etag
+            value: "{{ etag }}"
+
+    - name: Print 
+      ansible.builtin.debug:
+        msg: "{{ roles_dict | to_json }}"
+
+#    - name: Update project IAM policy
+#      ansible.builtin.uri:
+#        url: "https://cloudresourcemanager.googleapis.com/v1/projects/{{ project_id }}:setIamPolicy"
+#        method: POST
+#        headers:
+#          Authorization: "Bearer {{ lookup('ansible.builtin.env', 'GOOGLE_OAUTH_ACCESS_TOKEN') }}"
+#          Content-Type: "application/json"
+#        body_format: json
+#        body:
+#          policy: "{{ rolebinding }}"
+#        return_content: true
+#      register: update_result
 
