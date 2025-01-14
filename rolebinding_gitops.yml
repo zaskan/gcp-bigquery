@@ -22,7 +22,7 @@
           Content-Type: "application/json"
         body_format: json
         body:
-          policy: "{{ rolebinding | from_json }}"
+          policy: "{{ rolebinding }}"
         return_content: true
       register: update_result
 
