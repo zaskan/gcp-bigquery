@@ -1,16 +1,13 @@
 ---
 - name: Listen for events on a Github webhook
   hosts: localhost
-  ## Define our source for events
   sources:
     - ansible.eda.webhook:
         host: 0.0.0.0
         port: 5000
-  ## Define the conditions we are looking for
   rules:
     - name: Print event
-      condition: event.body != ""
-  ## Define the action we should take should the condition be met
+      condition: event.payload != ""
       action:
         debug:
-          msg: "Message 1 {{ event }}"
+          msg: "Message 1 {{ event.payload }}"
